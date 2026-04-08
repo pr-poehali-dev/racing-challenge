@@ -361,6 +361,12 @@
   display: block;
 }
 
+.track-info-3d {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+}
+
 .track-info {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.4);

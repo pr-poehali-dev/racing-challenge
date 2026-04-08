@@ -97,5 +97,522 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: "Rubik", sans-serif;
+    overflow: hidden;
   }
+}
+
+/* ─── GAME STYLES ─────────────────────────────────────────────── */
+
+.menu-bg {
+  min-height: 100vh;
+  background: radial-gradient(
+    ellipse at center,
+    #0d0d2b 0%,
+    #050510 60%,
+    #000008 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, #aaf 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 10%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, #faa 0%, transparent 100%),
+    radial-gradient(2px 2px at 85% 30%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 20% 90%, #aff 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 50%, #ffa 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 45%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 25%, #aaf 0%, transparent 100%),
+    radial-gradient(2px 2px at 15% 55%, #fff 0%, transparent 100%);
+  pointer-events: none;
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.menu-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.game-title {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(48px, 10vw, 88px);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow:
+    0 0 40px #ff004488,
+    0 0 80px #ff004444;
+  animation: title-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes title-pulse {
+  from {
+    text-shadow:
+      0 0 30px #ff004466,
+      0 0 60px #ff004422;
+  }
+  to {
+    text-shadow:
+      0 0 50px #ff0044cc,
+      0 0 100px #ff004466,
+      0 0 150px #ff004422;
+  }
+}
+
+.title-neon {
+  color: #ff4466;
+}
+.title-white {
+  color: #ffffff;
+}
+
+.subtitle-text {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(12px, 3vw, 18px);
+  color: #00ffcc;
+  letter-spacing: 6px;
+  text-shadow: 0 0 20px #00ffcc88;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.menu-btn {
+  font-family: "Orbitron", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 18px 32px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition:
+    transform 0.1s,
+    box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-btn:active {
+  transform: scale(0.97);
+}
+
+.btn-solo {
+  background: linear-gradient(135deg, #ff4466, #cc0033);
+  color: #fff;
+  box-shadow:
+    0 0 25px #ff446699,
+    0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.btn-solo:hover {
+  box-shadow:
+    0 0 40px #ff4466cc,
+    0 4px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-multi {
+  background: linear-gradient(135deg, #44aaff, #0055cc);
+  color: #fff;
+  box-shadow:
+    0 0 25px #44aaff99,
+    0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.btn-multi:hover {
+  box-shadow:
+    0 0 40px #44aaffcc,
+    0 4px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.controls-hint {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px 24px;
+  backdrop-filter: blur(8px);
+}
+
+.hint-block {
+  text-align: center;
+}
+
+.hint-title {
+  font-family: "Orbitron", monospace;
+  font-size: 12px;
+  color: #ffdd00;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #ffdd0088;
+}
+
+.hint-row {
+  font-size: 13px;
+  color: #aaa;
+  margin: 4px 0;
+}
+
+.hint-key {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: "Orbitron", monospace;
+  font-size: 11px;
+  color: #fff;
+  margin-right: 8px;
+}
+
+.laps-info {
+  font-family: "Orbitron", monospace;
+  font-size: 13px;
+  color: #ffdd00;
+  letter-spacing: 3px;
+  text-shadow: 0 0 12px #ffdd0066;
+}
+
+/* ─── TRACK SELECT ─── */
+.select-title {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(22px, 5vw, 36px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px #ffffff44;
+}
+
+.track-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.track-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid var(--track-color, #00ffcc);
+  border-radius: 16px;
+  padding: 20px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s;
+  min-width: 150px;
+  box-shadow: 0 0 20px
+    color-mix(in srgb, var(--track-color, #00ffcc) 30%, transparent);
+}
+
+.track-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 0 40px
+    color-mix(in srgb, var(--track-color, #00ffcc) 60%, transparent);
+}
+
+.track-number {
+  font-family: "Orbitron", monospace;
+  font-size: 32px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.track-name {
+  font-family: "Orbitron", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.track-preview svg {
+  display: block;
+}
+
+.track-info {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+.back-btn {
+  font-family: "Orbitron", monospace;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 10px 24px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all 0.2s;
+}
+.back-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── GAME SCREEN ─── */
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.hud {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px 6px;
+  z-index: 10;
+}
+
+.hud-car {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(11px, 2.5vw, 15px);
+  font-weight: 700;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.hud-track {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(9px, 2vw, 12px);
+  letter-spacing: 3px;
+  opacity: 0.7;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.canvas-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-canvas {
+  max-width: 100vw;
+  max-height: 100%;
+  border-radius: 12px;
+  box-shadow:
+    0 0 60px rgba(0, 255, 200, 0.15),
+    0 0 120px rgba(0, 0, 0, 0.5);
+}
+
+.countdown-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+
+.countdown-num {
+  font-family: "Orbitron", monospace;
+  font-size: 120px;
+  font-weight: 900;
+  text-shadow: 0 0 60px currentColor;
+  animation: countdown-pop 0.8s ease-out;
+}
+
+@keyframes countdown-pop {
+  from {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ─── TOUCH CONTROLS ─── */
+.touch-controls {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px 12px;
+  gap: 8px;
+}
+
+.touch-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.dpad-row {
+  display: flex;
+  gap: 4px;
+}
+
+.dpad-btn {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dpad-btn:active,
+.dpad-btn:focus {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.dpad-up {
+  margin-bottom: 0;
+}
+
+.pad-label {
+  font-family: "Orbitron", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.back-btn-game {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: "Orbitron", monospace;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 6px 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  z-index: 20;
+  transition: all 0.2s;
+}
+.back-btn-game:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ─── RESULTS ─── */
+.results-title {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(32px, 8vw, 60px);
+  font-weight: 900;
+  color: #ffdd00;
+  text-shadow: 0 0 40px #ffdd0099;
+  animation: title-pulse 1.5s ease-in-out infinite alternate;
+}
+
+.winner-name {
+  font-family: "Orbitron", monospace;
+  font-size: clamp(18px, 4vw, 28px);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px currentColor;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 14px 20px;
+}
+
+.result-pos {
+  font-family: "Orbitron", monospace;
+  font-size: 24px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.3);
+  min-width: 28px;
+}
+
+.result-name {
+  font-family: "Orbitron", monospace;
+  font-size: 14px;
+  color: #fff;
+  flex: 1;
+  letter-spacing: 2px;
+}
+
+.result-laps {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.result-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
